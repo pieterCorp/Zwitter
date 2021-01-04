@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zwitter", "Zwitter\Zwitter.csproj", "{4D9FB9CE-7BC5-4C1D-BF8A-98976C448F01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D9FB9CE-7BC5-4C1D-BF8A-98976C448F01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D9FB9CE-7BC5-4C1D-BF8A-98976C448F01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D9FB9CE-7BC5-4C1D-BF8A-98976C448F01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D9FB9CE-7BC5-4C1D-BF8A-98976C448F01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4AF34B6-3589-4AA9-922B-30DBEA05D842}
+	EndGlobalSection
+EndGlobal
