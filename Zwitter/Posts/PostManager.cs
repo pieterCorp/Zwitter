@@ -30,6 +30,7 @@ namespace Zwitter
 
         public void UpdatePost()
         {
+            //Nicks update
         }
 
         public void DisplayPosts()
