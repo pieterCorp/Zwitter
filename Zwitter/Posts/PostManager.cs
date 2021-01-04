@@ -26,6 +26,7 @@ namespace Zwitter
 
         public void DeletePost()
         {
+            //delete post
         }
 
         public void UpdatePost()
