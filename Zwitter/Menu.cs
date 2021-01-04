@@ -29,10 +29,12 @@ namespace Zwitter
                     return true;
 
                 case 2:
+                    postManager.UpdatePost();
                     //update a post
                     return true;
 
                 case 3:
+                    postManager.DeletePost();
                     // delete a post
                     return true;
 

@@ -294,6 +294,7 @@ namespace Zwitter
             Console.WriteLine(stringToPrint);
             Console.ResetColor();
         }
+
         static public void PrintDarkRed(string stringToPrint)
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
