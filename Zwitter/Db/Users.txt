@@ -4,3 +4,4 @@
 {"Id":4,"FirstName":"de","LastName":"de","Email":"test1","Password":"de","dateRegistered":"2021-01-05T10:28:53.1181488+01:00"}
 {"Id":5,"FirstName":"pieter","LastName":"vd","Email":"eentest","Password":"test","LoggedIn":false,"dateRegistered":"2021-01-05T11:15:00.0075137+01:00"}
 {"Id":6,"FirstName":"pi","LastName":"ter","Email":"pi@gmail.com","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T12:33:34.5365741+01:00"}
+{"Id":7,"FirstName":"naam","LastName":"naam","Email":"email","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T12:37:09.4099156+01:00"}

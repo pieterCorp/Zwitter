@@ -71,8 +71,11 @@ namespace Zwitter
                 case 0:
                     //login
                     activeUser = userManager.Login();
-                    Console.WriteLine($"Welcome {activeUser.FirstName} {activeUser.LastName}");
-                    Console.ReadLine();
+                    if (activeUser.LoggedIn)
+                    {
+                        Console.WriteLine($"Welcome {activeUser.FirstName} {activeUser.LastName}");
+                        Console.ReadLine();
+                    }
                     return true;
 
                 case 1:

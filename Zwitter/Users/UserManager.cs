@@ -23,14 +23,8 @@ namespace Zwitter
 
             if (!CheckEmailInSystem(eMail))
             {
-                Console.WriteLine("email not found. Do you want to register? y/n");
-                bool answer = UserIO.AskYesNoQ();
-                if (answer)
-                {
-                    //redirect to register
-                    Register();
-                }
-
+                Console.WriteLine("email not found. Press enter to continue");
+                Console.ReadLine();
                 return defaultUser;
             }
             //ask for password
