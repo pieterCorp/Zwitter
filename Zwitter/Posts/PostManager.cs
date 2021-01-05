@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ConsoleTables;
 
 namespace Zwitter
 {
@@ -92,10 +93,12 @@ namespace Zwitter
             }
             else
             {
+                var table = new ConsoleTable("id", "Posted at", "Zweet Body");
                 foreach (var post in posts)
                 {
-                    Console.WriteLine($"id: {post.postId}     placed at: {post.postedAt}     {post.postContent}");
+                    table.AddRow(post.postId, post.postedAt, post.postContent);
                 }
+                table.Write();
             }
         }
 
@@ -190,6 +193,15 @@ namespace Zwitter
                 Posts.Add(result);
             }
             return Posts;
+        }
+
+        private void MakeTable(int id, DateTime date, string zweet)
+        {
+            var table = new ConsoleTable("id", "Posted at", "Zweet Body");
+            table.AddRow(id, date, zweet);
+            table.Write();
+            //Console.WriteLine();
+            //Console.ReadKey();
         }
     }
 }
