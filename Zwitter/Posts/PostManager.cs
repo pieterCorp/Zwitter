@@ -53,6 +53,7 @@ namespace Zwitter
 
         public void UpdatePost()
         {
+
             List<Post> posts = LoadPosts();
             int selection = ShowPostsSelection(posts, "Update Post");
 
@@ -78,6 +79,7 @@ namespace Zwitter
                     Console.ReadLine();
                 }
             }
+
         }
 
         public void DisplayPosts()
