@@ -42,8 +42,6 @@ namespace Zwitter
             }
 
             user.LoggedIn = true;
-            UserIO.PrintColor(ConsoleColor.Green, $"You succesfully logged in as {user.FirstName} {user.LastName}", true);
-            Console.ReadLine();
             return user;
         }
 
@@ -162,14 +160,6 @@ namespace Zwitter
             int index = EmailRegisteredUsers.IndexOf(eMail);
             List<User> users = LoadUsers();
             return users[index];
-        }
-
-        public void test()
-        {
-            for (int i = 0; i < EmailRegisteredUsers.Count; i++)
-            {
-                Console.WriteLine(EmailRegisteredUsers[i]);
-            }
         }
     }
 }

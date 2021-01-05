@@ -136,7 +136,7 @@ namespace Zwitter
 
             postPreview[posts.Count] = "Back"; // add back as last option
 
-            int selection = UserIO.Menu(postPreview);
+            int selection = UserIO.Menu(postPreview, "Posts");
 
             return selection;
         }
@@ -190,49 +190,6 @@ namespace Zwitter
                 Posts.Add(result);
             }
             return Posts;
-        }
-
-        public bool Menu()
-        {
-            string[] options = new string[] { "Create new post", "Show all posts", "Update a post", "Delete a post", "Back to main menu" };
-            int input = UserIO.Menu(options);
-
-            PostManager postManager = new PostManager();
-
-            switch (input)
-            {
-                case 0:
-                    // Create new post
-
-                    postManager.CreateNewPost();
-                    return true;
-
-                case 1:
-                    //show all posts
-
-                    postManager.DisplayPosts();
-                    Console.ReadLine();
-                    return true;
-
-                case 2:
-                    postManager.UpdatePost();
-                    //update a post
-                    return true;
-
-                case 3:
-                    postManager.DeletePost();
-                    // delete a post
-                    return true;
-
-                case 4:
-                    //return to main menu
-                    return false;
-
-                default:
-                    Console.WriteLine("Give a vallid input plz!");
-                    Console.ReadLine();
-                    return true;
-            }
         }
     }
 }
