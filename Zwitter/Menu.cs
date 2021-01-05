@@ -8,7 +8,7 @@ namespace Zwitter
     {
         public bool ShowMenu()
         {
-            string[] options = new string[] { "posts", "Login", "Logout", "Regeister", "Quit" };
+            string[] options = new string[] { "posts", "Login", "Logout", "Register", "Quit" };
             int input = UserIO.Menu(options, "Zwitter");
 
             switch (input)
@@ -16,10 +16,11 @@ namespace Zwitter
                 case 0:
                     // posts
                     PostManager postManager = new PostManager();
+                    bool inPostMenu = true;
 
-                    while (postManager.Menu())
+                    while (inPostMenu)
                     {
-                        postManager.Menu();
+                        inPostMenu = postManager.Menu();
                     }
                     return true;
 
@@ -33,6 +34,8 @@ namespace Zwitter
 
                 case 3:
                     // register
+                    UserManager userManager = new UserManager();
+                    userManager.Register();
                     return true;
 
                 case 4:

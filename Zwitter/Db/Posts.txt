@@ -1,3 +1,4 @@
-{"postId":0,"postFromUserId":0,"postContent":"ol","postedAt":"2021-01-05T05:30:53.7949919+01:00"}
-{"postId":1,"postFromUserId":0,"postContent":"nog een domme test","postedAt":"2021-01-05T05:32:17.401752+01:00"}
-{"postId":3,"postFromUserId":0,"postContent":"po","postedAt":"2021-01-05T05:34:20.8100949+01:00"}
+{"postId":1,"postFromUserId":0,"postContent":"new post","postedAt":"2021-01-05T08:46:49.7091127+01:00"}
+{"postId":2,"postFromUserId":0,"postContent":"test1","postedAt":"2021-01-05T08:47:37.5570749+01:00"}
+{"postId":4,"postFromUserId":0,"postContent":"test","postedAt":"2021-01-05T08:47:42.4444451+01:00"}
+{"postId":5,"postFromUserId":0,"postContent":"test8","postedAt":"2021-01-05T08:48:46.556817+01:00"}

@@ -5,10 +5,12 @@ namespace Zwitter
 {
     internal class User
     {
-        private int userId { get; set; }
-        private string userName { get; set; }
-        private string userEmail { get; set; }
-        private DateTime dateRegistered { get; set; }
+        public int Id { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public DateTime dateRegistered { get; set; }
         private List<Post> allPosts = new List<Post>();
     }
 }
