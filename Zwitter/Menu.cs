@@ -5,6 +5,8 @@ namespace Zwitter
     internal class Menu
     {
         private User activeUser = new User();
+        private UserManager userManager = new UserManager();
+        private PostManager postManager = new PostManager();
 
         public void RunApp()
         {
@@ -25,9 +27,6 @@ namespace Zwitter
 
         private bool MenuLoggedIn()
         {
-            UserManager userManager = new UserManager();
-            PostManager postManager = new PostManager();
-
             string[] options = new string[] { "Posts", "LogOut", "Quit" };
             int input = UserIO.Menu(options, $"Zwitter logged in as {activeUser.FirstName} {activeUser.LastName}");
 
