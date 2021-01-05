@@ -7,6 +7,7 @@ namespace Zwitter
     {
         private int userId { get; set; }
         private string userName { get; set; }
+        private string userEmail { get; set; }
         private DateTime dateRegistered { get; set; }
         private List<Post> allPosts = new List<Post>();
     }

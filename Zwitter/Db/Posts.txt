@@ -1,2 +1,3 @@
-{"postId":0,"postFromUserId":0,"postContent":"test","postedAt":"2021-01-05T03:27:40.0176706+01:00"}
-{"postId":2,"postFromUserId":0,"postContent":"test3","postedAt":"2021-01-05T03:28:20.5531336+01:00"}
+{"postId":0,"postFromUserId":0,"postContent":"ol","postedAt":"2021-01-05T05:30:53.7949919+01:00"}
+{"postId":1,"postFromUserId":0,"postContent":"nog een domme test","postedAt":"2021-01-05T05:32:17.401752+01:00"}
+{"postId":3,"postFromUserId":0,"postContent":"po","postedAt":"2021-01-05T05:34:20.8100949+01:00"}

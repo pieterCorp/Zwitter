@@ -27,12 +27,12 @@ namespace Zwitter
                     }
                     else
                     {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                     }
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                 }
             }
             return answer;
@@ -52,7 +52,7 @@ namespace Zwitter
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                 }
             }
 
@@ -74,12 +74,12 @@ namespace Zwitter
                     }
                     else
                     {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                     }
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                 }
             }
             return validatedInput;
@@ -100,12 +100,12 @@ namespace Zwitter
                     }
                     else
                     {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                     }
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
                 }
             }
             return validatedInput;
@@ -120,7 +120,7 @@ namespace Zwitter
             {
                 Clear();
                 Console.CursorVisible = false;
-                PrintColor(ConsoleColor.Red, title);
+                PrintColor(ConsoleColor.Red, title, true);
                 Console.WriteLine();
 
                 for (int i = 0; i < options.Length; i++)
@@ -166,10 +166,17 @@ namespace Zwitter
             return selectionIndex;
         }
 
-        static public void PrintColor(ConsoleColor color, string stringToPrint)
+        static public void PrintColor(ConsoleColor color, string stringToPrint, bool writeLine)
         {
             Console.ForegroundColor = color;
-            Console.WriteLine(stringToPrint);
+            if (writeLine)
+            {
+                Console.WriteLine(stringToPrint);
+            }
+            else
+            {
+                Console.Write(stringToPrint);
+            }
             Console.ResetColor();
         }
     }
