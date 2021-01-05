@@ -8,8 +8,8 @@ namespace Zwitter
     {
         public bool ShowMenu()
         {
-            string[] options = new string[] { "posts", "Login", "Logout", "Register", "Quit" };
-            int input = UserIO.Menu(options, "Zwitter");
+            string[] options = new string[] { "Posts", "Login", "Logout", "Register", "Quit" };
+            int input = UserIO.Menu(options);
 
             switch (input)
             {
