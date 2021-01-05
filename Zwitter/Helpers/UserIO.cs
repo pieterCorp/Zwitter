@@ -123,7 +123,7 @@ namespace Zwitter
             return validatedInput;
         }
 
-        static public int Menu(string[] options)
+        static public int Menu(string[] options, string subTitle)
         {
             ConsoleKey keyPressed;
             int selectionIndex = 0;
@@ -133,6 +133,8 @@ namespace Zwitter
                 Clear();
                 Console.CursorVisible = false;
                 PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
+                PrintColor(ConsoleColor.DarkCyan, subTitle, true);
+
                 Console.WriteLine();
 
                 for (int i = 0; i < options.Length; i++)
