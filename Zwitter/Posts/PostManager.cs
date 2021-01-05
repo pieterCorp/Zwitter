@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using ConsoleTables;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ConsoleTables;
 
 namespace Zwitter
 {
@@ -11,41 +11,46 @@ namespace Zwitter
         public string FolderPath { get; set; } = "../../../Db/";
         public string FilePathPosts { get; set; } = "../../../Db/Posts.txt";
 
-        public void CreateNewPost()
+        public void CreateNewPost(User user)
         {
             Post post = new Post
             {
                 postId = GetNewId(),
-                postFromUserId = 0,
+                postFromUserId = user.Id,
                 postContent = GetPostContent(),
                 postedAt = DateTime.Now
             };
-
+            user.allPosts.Add(post);
             StorePost(post);
         }
 
-        public void DeletePost()
+        public void DeletePost(User user)
         {
             List<Post> posts = LoadPosts();
-            int selection = ShowPostsSelection(posts, "Delete Post");
+
+            int selection = ShowPostsSelection(user.allPosts, "Delete Post");
 
             if (selection == -1)
             {
                 UserIO.PrintColor(ConsoleColor.Yellow, "No posts to be deleted, press enter to continue", true);
                 Console.ReadLine();
             }
-            else if (selection == posts.Count)
+            else if (selection == user.allPosts.Count)
             {
                 return; //user pressed back
             }
             else
             {
-                posts.RemoveAt(selection);
-
                 UserIO.PrintColor(ConsoleColor.DarkRed, "Are you sure you want to delete this post? y/n", true);
 
                 if (UserIO.AskYesNoQ())
                 {
+                    int postId = user.allPosts[selection].postId;
+                    Post postToDelete = posts.Find(x => x.postId == postId);
+                    posts.Remove(postToDelete); //remove from all posts
+
+                    user.allPosts.RemoveAt(selection); //remove from userlist
+
                     UpdateDb(posts);
                     UserIO.PrintColor(ConsoleColor.Green, "Your post was succesfully deleted!, press enter to continue", true);
                     Console.ReadLine();
@@ -53,10 +58,10 @@ namespace Zwitter
             }
         }
 
-        public void UpdatePost()
+        public void UpdatePost(User user)
         {
             List<Post> posts = LoadPosts();
-            int selection = ShowPostsSelection(posts, "Update Post");
+            int selection = ShowPostsSelection(user.allPosts, "Update Post");
 
             if (selection == -1)
             {
@@ -69,12 +74,18 @@ namespace Zwitter
             }
             else
             {
-                posts[selection].postContent = GetPostContent();
-
+                string newContent = GetPostContent();
                 UserIO.PrintColor(ConsoleColor.DarkRed, "Are you sure you want to update this post? y/n", true);
 
                 if (UserIO.AskYesNoQ())
                 {
+                    user.allPosts[selection].postContent = newContent; //update userlist
+
+                    int postId = user.allPosts[selection].postId;
+                    Post postToUpdate = posts.Find(x => x.postId == postId);
+                    int index = posts.IndexOf(postToUpdate);
+                    posts[index].postContent = newContent; //Update in posts
+
                     UpdateDb(posts);
                     UserIO.PrintColor(ConsoleColor.Green, "Your post was succesfully updated!, press enter to continue", true);
                     Console.ReadLine();
@@ -82,7 +93,26 @@ namespace Zwitter
             }
         }
 
-        public void DisplayPosts()
+        public void DisplayUserPosts(User user)
+        {
+            Console.Clear();
+
+            if (!user.allPosts.Any())
+            {
+                UserIO.PrintColor(ConsoleColor.Yellow, "No posts to show", true);
+            }
+            else
+            {
+                var table = new ConsoleTable("id", "Posted at", "Zweet Body");
+                foreach (var post in user.allPosts)
+                {
+                    table.AddRow(post.postId, post.postedAt, post.postContent);
+                }
+                table.Write();
+            }
+        }
+
+        public void DisplayAllPosts()
         {
             Console.Clear();
             List<Post> posts = LoadPosts();
@@ -132,7 +162,7 @@ namespace Zwitter
                     }
                     else
                     {
-                        postPreview[i] = posts[i].postContent.Substring(0, 30);
+                        postPreview[i] = posts[i].postContent.Substring(0, 30) + "...";
                     }
                 }
             }
@@ -175,7 +205,7 @@ namespace Zwitter
             fileManager.WriteDataToFile(json, FilePathPosts);
         }
 
-        private List<Post> LoadPosts()
+        public List<Post> LoadPosts()
         {
             UserIO.PrintColor(ConsoleColor.Cyan, UserIO.zwitterAscii, true);
             Filemanager fileManager = new Filemanager();

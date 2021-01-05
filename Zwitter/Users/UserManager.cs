@@ -42,6 +42,7 @@ namespace Zwitter
             }
 
             user.LoggedIn = true;
+            LoadUserPosts(user);
             return user;
         }
 
@@ -160,6 +161,21 @@ namespace Zwitter
             int index = EmailRegisteredUsers.IndexOf(eMail);
             List<User> users = LoadUsers();
             return users[index];
+        }
+
+        private void LoadUserPosts(User user)
+        {
+            PostManager postManager = new PostManager();
+            List<Post> allPosts = postManager.LoadPosts();
+            user.allPosts.Clear();
+
+            foreach (var post in allPosts)
+            {
+                if (post.postFromUserId == user.Id)
+                {
+                    user.allPosts.Add(post);
+                }
+            }
         }
     }
 }

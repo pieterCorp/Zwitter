@@ -1,10 +1,1 @@
-{"Id":1,"FirstName":"test","LastName":"test","Email":"test","Password":"test","dateRegistered":"2021-01-05T10:28:07.4233961+01:00"}
-{"Id":2,"FirstName":"f","LastName":"f","Email":"test2","Password":"f","dateRegistered":"2021-01-05T10:28:23.5904995+01:00"}
-{"Id":3,"FirstName":"","LastName":"e","Email":"test3","Password":"e","dateRegistered":"2021-01-05T10:28:35.846336+01:00"}
-{"Id":4,"FirstName":"de","LastName":"de","Email":"test1","Password":"de","dateRegistered":"2021-01-05T10:28:53.1181488+01:00"}
-{"Id":5,"FirstName":"pieter","LastName":"vd","Email":"eentest","Password":"test","LoggedIn":false,"dateRegistered":"2021-01-05T11:15:00.0075137+01:00"}
-{"Id":6,"FirstName":"pi","LastName":"ter","Email":"pi@gmail.com","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T12:33:34.5365741+01:00"}
-{"Id":7,"FirstName":"naam","LastName":"naam","Email":"email","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T12:37:09.4099156+01:00"}
-{"Id":8,"FirstName":"pieter","LastName":"vd","Email":"pieter","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T14:32:19.5947125+01:00"}
-{"Id":9,"FirstName":"hollander","LastName":"vliegende","Email":"test@test.nl","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T14:36:48.9863307+01:00"}
-{"Id":10,"FirstName":"r","LastName":"r","Email":"r","Password":"r","LoggedIn":false,"dateRegistered":"2021-01-05T16:57:52.1494355+01:00"}
+{"Id":1,"FirstName":"t","LastName":"t","Email":"t","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-05T20:19:11.6245509+01:00"}
