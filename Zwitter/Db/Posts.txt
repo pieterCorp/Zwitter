@@ -1,2 +1,2 @@
-{"postId":0,"postFromUserId":0,"postContent":"new content","postedAt":"2021-01-04T18:48:25.8115962+01:00"}
-{"postId":1,"postFromUserId":0,"postContent":"test","postedAt":"2021-01-04T18:48:26.628823+01:00"}
+{"postId":0,"postFromUserId":0,"postContent":"test","postedAt":"2021-01-05T03:27:40.0176706+01:00"}
+{"postId":2,"postFromUserId":0,"postContent":"test3","postedAt":"2021-01-05T03:28:20.5531336+01:00"}

@@ -27,15 +27,27 @@ namespace Zwitter
             List<Post> posts = LoadPosts();
             int selection = ShowPostsSelection(posts, "Delete Post");
 
-            if (!posts.Any())
+            if (selection == -1)
             {
-                Console.WriteLine("No posts to be deleted, press enter to continue");
+                UserIO.PrintColor(ConsoleColor.Yellow, "No posts to be deleted, press enter to continue");
                 Console.ReadLine();
+            }
+            else if (selection == posts.Count)
+            {
+                return; //user pressed back
             }
             else
             {
                 posts.RemoveAt(selection);
-                UpdateDb(posts);
+
+                UserIO.PrintColor(ConsoleColor.DarkRed, "Are you sure you want to delete this post? y/n");
+
+                if (UserIO.AskYesNoQ())
+                {
+                    UpdateDb(posts);
+                    UserIO.PrintColor(ConsoleColor.Green, "Your post was succesfully deleted!, press enter to continue");
+                    Console.ReadLine();
+                }
             }
         }
 
@@ -44,15 +56,39 @@ namespace Zwitter
             List<Post> posts = LoadPosts();
             int selection = ShowPostsSelection(posts, "Update Post");
 
-            if (!posts.Any())
+            if (selection == -1)
             {
-                Console.WriteLine("No posts to be updated, press enter to continue");
+                UserIO.PrintColor(ConsoleColor.Yellow, "No posts to be updated, press enter to continue");
                 Console.ReadLine();
+            }
+            else if (selection == posts.Count)
+            {
+                return; //user pressed back
             }
             else
             {
-                posts[selection].postContent = "new content";  //update post here...
-                UpdateDb(posts);
+                posts[selection].postContent = GetPostContent();
+
+                UserIO.PrintColor(ConsoleColor.DarkRed, "Are you sure you want to update this post? y/n");
+
+                if (UserIO.AskYesNoQ())
+                {
+                    UpdateDb(posts);
+                    UserIO.PrintColor(ConsoleColor.Green, "Your post was succesfully updated!, press enter to continue");
+                    Console.ReadLine();
+                }
+            }
+        }
+
+        public void DisplayPosts()
+        {
+            Console.Clear();
+            List<Post> posts = LoadPosts();
+            foreach (var post in posts)
+            {
+                Console.WriteLine(post.postContent);
+                Console.WriteLine(post.postId);
+                Console.WriteLine(post.postedAt);
             }
         }
 
@@ -70,34 +106,32 @@ namespace Zwitter
         {
             Console.Clear();
 
-            string[] postPreview = new string[posts.Count];
+            string[] postPreview = new string[posts.Count + 1];
 
-            for (int i = 0; i < postPreview.Length; i++)
+            if (!posts.Any())
             {
-                if (posts[i].postContent.Length < 30)
+                return -1; //return -1 if list is empty
+            }
+            else
+            {
+                for (int i = 0; i < postPreview.Length - 1; i++)
                 {
-                    postPreview[i] = posts[i].postContent;
-                }
-                else
-                {
-                    postPreview[i] = posts[i].postContent.Substring(0, 30);
+                    if (posts[i].postContent.Length < 30)
+                    {
+                        postPreview[i] = posts[i].postContent;
+                    }
+                    else
+                    {
+                        postPreview[i] = posts[i].postContent.Substring(0, 30);
+                    }
                 }
             }
+
+            postPreview[posts.Count] = "Back"; // add back as last option
 
             int selection = UserIO.Menu(postPreview, menuTitle);
 
             return selection;
-        }
-
-        public void DisplayPosts()
-        {
-            List<Post> posts = LoadPosts();
-            foreach (var post in posts)
-            {
-                Console.WriteLine(post.postContent);
-                Console.WriteLine(post.postId);
-                Console.WriteLine(post.postedAt);
-            }
         }
 
         private int GetNewId()
@@ -113,8 +147,10 @@ namespace Zwitter
 
         private string GetPostContent()
         {
-            string content = "test";
             //ask user for content
+            Console.Clear();
+            Console.WriteLine("write your post, press enter to commit");
+            string content = UserIO.GetUserString();
             return content;
         }
 
