@@ -194,14 +194,5 @@ namespace Zwitter
             }
             return Posts;
         }
-
-        private void MakeTable(int id, DateTime date, string zweet)
-        {
-            var table = new ConsoleTable("id", "Posted at", "Zweet Body");
-            table.AddRow(id, date, zweet);
-            table.Write();
-            //Console.WriteLine();
-            //Console.ReadKey();
-        }
     }
 }
