@@ -8,13 +8,6 @@ namespace Zwitter
         {
             Menu menu = new Menu();
             menu.RunApp();
-
-            //bool appRunning = true;
-
-            //while (appRunning)
-            //{
-            //    appRunning = menu.ShowMenu();
-            //}
         }
     }
 }

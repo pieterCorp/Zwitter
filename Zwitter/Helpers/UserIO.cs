@@ -5,6 +5,18 @@ namespace Zwitter
 {
     internal class UserIO
     {
+        internal static string zwitterAscii = @"
+
+ ________  ___       __   ___  _________  _________  _______   ________
+|\_____  \|\  \     |\  \|\  \|\___   ___\\___   ___\\  ___ \ |\   __  \
+ \|___/  /\ \  \    \ \  \ \  \|___ \  \_\|___ \  \_\ \   __/|\ \  \|\  \
+     /  / /\ \  \  __\ \  \ \  \   \ \  \     \ \  \ \ \  \_|/_\ \   _  _\
+    /  /_/__\ \  \|\__\_\  \ \  \   \ \  \     \ \  \ \ \  \_|\ \ \  \\  \|
+   |\________\ \____________\ \__\   \ \__\     \ \__\ \ \_______\ \__\\ _\
+    \|_______|\|____________|\|__|    \|__|      \|__|  \|_______|\|__|\|__|
+
+";
+
         static public bool AskYesNoQ()
         {
             bool validInput = false;
@@ -111,7 +123,7 @@ namespace Zwitter
             return validatedInput;
         }
 
-        static public int Menu(string[] options, string title)
+        static public int Menu(string[] options, string subTitle)
         {
             ConsoleKey keyPressed;
             int selectionIndex = 0;
@@ -120,7 +132,9 @@ namespace Zwitter
             {
                 Clear();
                 Console.CursorVisible = false;
-                PrintColor(ConsoleColor.Red, title, true);
+                PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
+                PrintColor(ConsoleColor.DarkCyan, subTitle, true);
+
                 Console.WriteLine();
 
                 for (int i = 0; i < options.Length; i++)
@@ -132,8 +146,8 @@ namespace Zwitter
                     }
                     else
                     {
-                        ForegroundColor = ConsoleColor.Blue;
-                        if (i == options.Length - 1) ForegroundColor = ConsoleColor.DarkRed;
+                        ForegroundColor = ConsoleColor.DarkCyan;
+                        if (i == options.Length - 1) ForegroundColor = ConsoleColor.DarkGray;
                         Write("   ");
                     }
 
