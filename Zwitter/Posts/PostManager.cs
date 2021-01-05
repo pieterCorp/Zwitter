@@ -12,12 +12,13 @@ namespace Zwitter
 
         public void CreateNewPost()
         {
-            Post post = new Post();
-
-            post.postId = GetNewId();
-            post.postFromUserId = 0;
-            post.postContent = GetPostContent();
-            post.postedAt = DateTime.Now;
+            Post post = new Post
+            {
+                postId = GetNewId(),
+                postFromUserId = 0,
+                postContent = GetPostContent(),
+                postedAt = DateTime.Now
+            };
 
             StorePost(post);
         }
@@ -53,7 +54,6 @@ namespace Zwitter
 
         public void UpdatePost()
         {
-
             List<Post> posts = LoadPosts();
             int selection = ShowPostsSelection(posts, "Update Post");
 
@@ -79,7 +79,6 @@ namespace Zwitter
                     Console.ReadLine();
                 }
             }
-
         }
 
         public void DisplayPosts()
@@ -137,7 +136,7 @@ namespace Zwitter
 
             postPreview[posts.Count] = "Back"; // add back as last option
 
-            int selection = UserIO.Menu(postPreview, menuTitle);
+            int selection = UserIO.Menu(postPreview);
 
             return selection;
         }
@@ -157,7 +156,8 @@ namespace Zwitter
         {
             //ask user for content
             Console.Clear();
-            Console.WriteLine("write your post, press enter to commit");
+            UserIO.PrintColor(ConsoleColor.Cyan, UserIO.zwitterAscii, true);
+            UserIO.PrintColor(ConsoleColor.DarkCyan, "What's happening?", true);
             string content = UserIO.GetUserString();
             return content;
         }
@@ -174,6 +174,7 @@ namespace Zwitter
 
         private List<Post> LoadPosts()
         {
+            UserIO.PrintColor(ConsoleColor.Cyan, UserIO.zwitterAscii, true);
             Filemanager fileManager = new Filemanager();
             List<string> postsJson = new List<string>();
             List<Post> Posts = new List<Post>();
@@ -194,7 +195,7 @@ namespace Zwitter
         public bool Menu()
         {
             string[] options = new string[] { "Create new post", "Show all posts", "Update a post", "Delete a post", "Back to main menu" };
-            int input = UserIO.Menu(options, "Zwitter");
+            int input = UserIO.Menu(options);
 
             PostManager postManager = new PostManager();
 
