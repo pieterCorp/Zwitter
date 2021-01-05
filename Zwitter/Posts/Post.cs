@@ -7,8 +7,8 @@ namespace Zwitter
     internal class Post
     {
         public int postId { get; set; }
-        private int postFromUserId { get; set; }
+        public int postFromUserId { get; set; }
         public string postContent { get; set; }
-        private DateTime postedAt { get; set; }
+        public DateTime postedAt { get; set; }
     }
 }
