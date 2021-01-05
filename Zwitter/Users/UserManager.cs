@@ -9,48 +9,90 @@ namespace Zwitter
         public string FolderPath { get; set; } = "../../../Db/";
         public string FilePathUsers { get; set; } = "../../../Db/Users.txt";
 
-        public string[] EmailRegisteredUsers { get; set; }
+        private List<string> EmailRegisteredUsers = new List<string>();
 
-        public void Login()
+        public User Login()
         {
+            User defaultUser = new User(); //return default user as not logged in
+
+            UpdateRegisteredEmail();
             //ask for email and check if in system
+
+            Console.WriteLine("Enter Email");
+            string eMail = UserIO.GetUserString();
+
+            if (!CheckEmailInSystem(eMail))
+            {
+                Console.WriteLine("email not found. Do you want to register? y/n");
+                bool answer = UserIO.AskYesNoQ();
+                if (answer)
+                {
+                    //redirect to register
+                    Register();
+                }
+
+                return defaultUser;
+            }
+            //ask for password
+            Console.WriteLine("Enter Password");
+            string password = UserIO.GetUserString();
+
+            User user = GetUserByEmail(eMail);
+
             //check if email and pass are correct
-            //check if not logged in already
-            //set logged in to true
+            if (password != user.Password)
+            {
+                Console.WriteLine("Password incorrect, press enter to continue");
+                Console.ReadLine();
+                return defaultUser;
+            }
+
+            user.LoggedIn = true;
+            UserIO.PrintColor(ConsoleColor.Green, $"You succesfully logged in as {user.FirstName} {user.LastName}", true);
+            Console.ReadLine();
+            return user;
         }
 
-        public void Logout()
+        public void Logout(User user)
         {
             //set logged in to false
+            user.LoggedIn = false;
+            UserIO.PrintColor(ConsoleColor.Green, "You succesfully logged out", true);
+            Console.ReadLine();
         }
 
         public void Register()
         {
+            UpdateRegisteredEmail();
+
             Console.WriteLine("Enter Email");
             string eMail = UserIO.GetUserString();
 
             if (CheckEmailInSystem(eMail))
             {
-                Console.WriteLine("email already exists, do you want to login?");
-                //redirect to login
-                //or return
+                Console.WriteLine("email already exists, press enter to continue");
+                Console.ReadLine();
+                return;
             }
             else
             {
                 User newUser = MakeNewAccount(eMail);
 
                 StoreUser(newUser);
+                UpdateRegisteredEmail();
 
                 UserIO.PrintColor(ConsoleColor.Green, "Your account has been created. Press enter to continue", true);
                 Console.ReadLine();
-
-                //update emailsRegistered array
-                //UpdateRegisteredEmail();
             }
         }
 
         private bool CheckEmailInSystem(string eMail)
         {
+            if (EmailRegisteredUsers.Contains(eMail))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -113,9 +155,26 @@ namespace Zwitter
         private void UpdateRegisteredEmail()
         {
             List<User> users = LoadUsers();
-            for (int i = 0; i < users.Count - 1; i++)
+            EmailRegisteredUsers.Clear();
+
+            foreach (var user in users)
             {
-                EmailRegisteredUsers[i] = users[i].Email;
+                EmailRegisteredUsers.Add(user.Email);
+            }
+        }
+
+        private User GetUserByEmail(string eMail)
+        {
+            int index = EmailRegisteredUsers.IndexOf(eMail);
+            List<User> users = LoadUsers();
+            return users[index];
+        }
+
+        public void test()
+        {
+            for (int i = 0; i < EmailRegisteredUsers.Count; i++)
+            {
+                Console.WriteLine(EmailRegisteredUsers[i]);
             }
         }
     }

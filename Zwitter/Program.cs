@@ -2,18 +2,19 @@
 
 namespace Zwitter
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Menu menu = new Menu();
+            menu.RunApp();
 
-            bool appRunning = true;
+            //bool appRunning = true;
 
-            while (appRunning)
-            {
-                appRunning = menu.ShowMenu();
-            }
+            //while (appRunning)
+            //{
+            //    appRunning = menu.ShowMenu();
+            //}
         }
     }
 }
