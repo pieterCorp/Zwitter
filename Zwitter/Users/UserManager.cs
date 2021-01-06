@@ -10,35 +10,35 @@ namespace Zwitter
         public string FilePathUsers { get; set; } = "../../../Db/Users.txt";
 
         private List<string> EmailRegisteredUsers = new List<string>();
+        private List<int> IdRegisteredUsers = new List<int>();
 
         public User Login()
         {
-            User defaultUser = new User(); //return default user as not logged in
+            UpdateSearchLists();
 
-            UpdateRegisteredEmail();
-            //ask for email and check if in system
+            UserIO.ShowTitle();
 
             Console.WriteLine("Enter Email");
             string eMail = UserIO.GetUserString();
+
+            User user = GetUserByEmail(eMail);
 
             if (!CheckEmailInSystem(eMail))
             {
                 Console.WriteLine("email not found. Press enter to continue");
                 Console.ReadLine();
-                return defaultUser;
+                return user;
             }
-            //ask for password
+
             Console.WriteLine("Enter Password");
             string password = UserIO.GetUserString();
-
-            User user = GetUserByEmail(eMail);
 
             //check if email and pass are correct
             if (password != user.Password)
             {
                 Console.WriteLine("Password incorrect, press enter to continue");
                 Console.ReadLine();
-                return defaultUser;
+                return user;
             }
 
             user.LoggedIn = true;
@@ -48,15 +48,14 @@ namespace Zwitter
 
         public void Logout(User user)
         {
-            //set logged in to false
             user.LoggedIn = false;
-            UserIO.PrintColor(ConsoleColor.Green, "You succesfully logged out", true);
-            Console.ReadLine();
         }
 
         public void Register()
         {
-            UpdateRegisteredEmail();
+            UpdateSearchLists();
+
+            UserIO.ShowTitle();
 
             Console.WriteLine("Enter Email");
             string eMail = UserIO.GetUserString();
@@ -72,7 +71,7 @@ namespace Zwitter
                 User newUser = MakeNewAccount(eMail);
 
                 StoreUser(newUser);
-                UpdateRegisteredEmail();
+                UpdateSearchLists();
 
                 UserIO.PrintColor(ConsoleColor.Green, "Your account has been created. Press enter to continue", true);
                 Console.ReadLine();
@@ -91,8 +90,6 @@ namespace Zwitter
 
         private User MakeNewAccount(string eMail)
         {
-            User newUser = new User();
-
             Console.WriteLine("Enter firstname");
             string firstName = UserIO.GetUserString();
 
@@ -105,6 +102,8 @@ namespace Zwitter
             // make unique id;
             Filemanager fileManager = new Filemanager();
             int newId = fileManager.CountLinesFile(FilePathUsers) + 1;
+
+            User newUser = new User();
 
             newUser.FirstName = firstName;
             newUser.LastName = lastName;
@@ -145,20 +144,30 @@ namespace Zwitter
             return users;
         }
 
-        private void UpdateRegisteredEmail()
+        private void UpdateSearchLists()
         {
             List<User> users = LoadUsers();
             EmailRegisteredUsers.Clear();
+            IdRegisteredUsers.Clear();
 
             foreach (var user in users)
             {
                 EmailRegisteredUsers.Add(user.Email);
+                IdRegisteredUsers.Add(user.Id);
             }
         }
 
         private User GetUserByEmail(string eMail)
         {
             int index = EmailRegisteredUsers.IndexOf(eMail);
+            List<User> users = LoadUsers();
+            return users[index];
+        }
+
+        public User GetUserByid(int id)
+        {
+            UpdateSearchLists();
+            int index = IdRegisteredUsers.IndexOf(id);
             List<User> users = LoadUsers();
             return users[index];
         }
@@ -171,7 +180,7 @@ namespace Zwitter
 
             foreach (var post in allPosts)
             {
-                if (post.postFromUserId == user.Id)
+                if (post.PostFromUserId == user.Id)
                 {
                     user.allPosts.Add(post);
                 }

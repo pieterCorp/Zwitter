@@ -1,2 +1,0 @@
-{"postId":0,"postFromUserId":1,"postContent":"op","postedAt":"2021-01-05T20:49:38.6719577+01:00"}
-{"postId":2,"postFromUserId":1,"postContent":"z","postedAt":"2021-01-05T20:50:06.2155809+01:00"}

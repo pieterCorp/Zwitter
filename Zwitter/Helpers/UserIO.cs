@@ -193,5 +193,11 @@ namespace Zwitter
             }
             Console.ResetColor();
         }
+
+        static public void ShowTitle()
+        {
+            Console.Clear();
+            PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
+        }
     }
 }

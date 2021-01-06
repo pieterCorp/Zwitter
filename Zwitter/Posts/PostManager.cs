@@ -15,10 +15,10 @@ namespace Zwitter
         {
             Post post = new Post
             {
-                postId = GetNewId(),
-                postFromUserId = user.Id,
-                postContent = GetPostContent(),
-                postedAt = DateTime.Now
+                PostId = GetNewId(),
+                PostFromUserId = user.Id,
+                PostContent = GetPostContent(),
+                PostedAt = DateTime.Now
             };
             user.allPosts.Add(post);
             StorePost(post);
@@ -32,6 +32,7 @@ namespace Zwitter
 
             if (selection == -1)
             {
+                UserIO.ShowTitle();
                 UserIO.PrintColor(ConsoleColor.Yellow, "No posts to be deleted, press enter to continue", true);
                 Console.ReadLine();
             }
@@ -45,13 +46,16 @@ namespace Zwitter
 
                 if (UserIO.AskYesNoQ())
                 {
-                    int postId = user.allPosts[selection].postId;
-                    Post postToDelete = posts.Find(x => x.postId == postId);
+                    int postId = user.allPosts[selection].PostId;
+                    Post postToDelete = posts.Find(x => x.PostId == postId);
                     posts.Remove(postToDelete); //remove from all posts
 
                     user.allPosts.RemoveAt(selection); //remove from userlist
 
                     UpdateDb(posts);
+
+                    UserIO.ShowTitle();
+
                     UserIO.PrintColor(ConsoleColor.Green, "Your post was succesfully deleted!, press enter to continue", true);
                     Console.ReadLine();
                 }
@@ -65,10 +69,11 @@ namespace Zwitter
 
             if (selection == -1)
             {
+                UserIO.ShowTitle();
                 UserIO.PrintColor(ConsoleColor.Yellow, "No posts to be updated, press enter to continue", true);
                 Console.ReadLine();
             }
-            else if (selection == posts.Count)
+            else if (selection == user.allPosts.Count)
             {
                 return; //user pressed back
             }
@@ -79,14 +84,17 @@ namespace Zwitter
 
                 if (UserIO.AskYesNoQ())
                 {
-                    user.allPosts[selection].postContent = newContent; //update userlist
+                    user.allPosts[selection].PostContent = newContent; //update userlist
 
-                    int postId = user.allPosts[selection].postId;
-                    Post postToUpdate = posts.Find(x => x.postId == postId);
+                    int postId = user.allPosts[selection].PostId;
+                    Post postToUpdate = posts.Find(x => x.PostId == postId);
                     int index = posts.IndexOf(postToUpdate);
-                    posts[index].postContent = newContent; //Update in posts
+                    posts[index].PostContent = newContent; //Update in posts
 
                     UpdateDb(posts);
+
+                    UserIO.ShowTitle();
+
                     UserIO.PrintColor(ConsoleColor.Green, "Your post was succesfully updated!, press enter to continue", true);
                     Console.ReadLine();
                 }
@@ -95,7 +103,9 @@ namespace Zwitter
 
         public void DisplayUserPosts(User user)
         {
-            Console.Clear();
+            UserIO.ShowTitle();
+
+            UserManager userManager = new UserManager();
 
             if (!user.allPosts.Any())
             {
@@ -103,10 +113,11 @@ namespace Zwitter
             }
             else
             {
-                var table = new ConsoleTable("id", "Posted at", "Zweet Body");
+                var table = new ConsoleTable("Author", "Posted at", "Zweet Body");
                 foreach (var post in user.allPosts)
                 {
-                    table.AddRow(post.postId, post.postedAt, post.postContent);
+                    User postAuthor = userManager.GetUserByid(post.PostFromUserId);
+                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt, post.PostContent);
                 }
                 table.Write();
             }
@@ -114,7 +125,10 @@ namespace Zwitter
 
         public void DisplayAllPosts()
         {
-            Console.Clear();
+            UserManager userManager = new UserManager();
+
+            UserIO.ShowTitle();
+
             List<Post> posts = LoadPosts();
 
             if (!posts.Any())
@@ -123,12 +137,37 @@ namespace Zwitter
             }
             else
             {
-                var table = new ConsoleTable("id", "Posted at", "Zweet Body");
+                var table = new ConsoleTable("Author", "Posted at", "Zweet Body");
                 foreach (var post in posts)
                 {
-                    table.AddRow(post.postId, post.postedAt, post.postContent);
+                    User postAuthor = userManager.GetUserByid(post.PostFromUserId);
+                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt, post.PostContent);
                 }
                 table.Write();
+            }
+        }
+
+        public void LikePost(User user, int userId)
+        {
+            List<Post> posts = LoadPosts();
+            int selection = ShowPostsSelection(user.allPosts, "Like a Post");
+
+            if (selection == -1)
+            {
+                UserIO.PrintColor(ConsoleColor.Yellow, "No posts like, press enter to continue", true);
+                Console.ReadLine();
+            }
+            else if (selection == user.allPosts.Count)
+            {
+                return; //user pressed back
+            }
+            else
+            {
+                //todo
+
+                //check if user liked already
+                //like
+                //update
             }
         }
 
@@ -144,8 +183,6 @@ namespace Zwitter
 
         private int ShowPostsSelection(List<Post> posts, string menuTitle)
         {
-            Console.Clear();
-
             string[] postPreview = new string[posts.Count + 1];
 
             if (!posts.Any())
@@ -156,20 +193,20 @@ namespace Zwitter
             {
                 for (int i = 0; i < postPreview.Length - 1; i++)
                 {
-                    if (posts[i].postContent.Length < 30)
+                    if (posts[i].PostContent.Length < 30)
                     {
-                        postPreview[i] = posts[i].postContent;
+                        postPreview[i] = posts[i].PostContent;
                     }
                     else
                     {
-                        postPreview[i] = posts[i].postContent.Substring(0, 30) + "...";
+                        postPreview[i] = posts[i].PostContent.Substring(0, 30) + "...";
                     }
                 }
             }
 
             postPreview[posts.Count] = "Back"; // add back as last option
 
-            int selection = UserIO.Menu(postPreview, "Posts");
+            int selection = UserIO.Menu(postPreview, menuTitle);
 
             return selection;
         }
@@ -180,16 +217,15 @@ namespace Zwitter
 
             if (allPosts.Count < 1) return 0;
 
-            int lastId = allPosts[allPosts.Count - 1].postId;
+            int lastId = allPosts[allPosts.Count - 1].PostId;
             int newId = lastId + 1;
             return newId;
         }
 
         private string GetPostContent()
         {
-            //ask user for content
-            Console.Clear();
-            UserIO.PrintColor(ConsoleColor.Cyan, UserIO.zwitterAscii, true);
+            UserIO.ShowTitle();
+
             UserIO.PrintColor(ConsoleColor.DarkCyan, "What's happening?", true);
             string content = UserIO.GetUserString();
             return content;
@@ -207,7 +243,6 @@ namespace Zwitter
 
         public List<Post> LoadPosts()
         {
-            UserIO.PrintColor(ConsoleColor.Cyan, UserIO.zwitterAscii, true);
             Filemanager fileManager = new Filemanager();
             List<string> postsJson = new List<string>();
             List<Post> Posts = new List<Post>();
