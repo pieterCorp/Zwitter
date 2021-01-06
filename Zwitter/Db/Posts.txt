@@ -1,4 +1,0 @@
-{"postId":1,"postFromUserId":0,"postContent":"new post","postedAt":"2021-01-05T08:46:49.7091127+01:00"}
-{"postId":6,"postFromUserId":0,"postContent":"een post","postedAt":"2021-01-05T13:24:54.9050657+01:00"}
-{"postId":8,"postFromUserId":0,"postContent":"test","postedAt":"2021-01-05T14:24:22.0977345+01:00"}
-{"postId":9,"postFromUserId":0,"postContent":"weinig","postedAt":"2021-01-05T14:30:29.8979381+01:00"}

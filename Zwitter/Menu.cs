@@ -27,38 +27,44 @@ namespace Zwitter
 
         private bool MenuLoggedIn()
         {
-            string[] options = new string[] { "Create new post", "Show all posts", "Update a post", "Delete a post", "LogOut", "Quit" };
+            string[] options = new string[] { "Create new post", "Show all posts", "Show my posts", "Update a post", "Delete a post", "LogOut", "Quit" };
             int input = UserIO.Menu(options, $"Welcome {activeUser.FirstName} {activeUser.LastName}");
 
             switch (input)
             {
                 case 0:
                     // Create new post
-                    postManager.CreateNewPost();
+                    postManager.CreateNewPost(activeUser);
                     return true;
 
                 case 1:
                     //show all posts
-                    postManager.DisplayPosts();
+                    postManager.DisplayAllPosts();
                     Console.ReadLine();
                     return true;
 
                 case 2:
-                    //update a post
-                    postManager.UpdatePost();
+                    //show all posts of user
+                    postManager.DisplayUserPosts(activeUser);
+                    Console.ReadLine();
                     return true;
 
                 case 3:
-                    // delete a post
-                    postManager.DeletePost();
+                    //update a post
+                    postManager.UpdatePost(activeUser);
                     return true;
 
                 case 4:
+                    // delete a post
+                    postManager.DeletePost(activeUser);
+                    return true;
+
+                case 5:
                     // LogOut
                     userManager.Logout(activeUser);
                     return true;
 
-                case 5:
+                case 6:
                     //quit
                     return false;
 
@@ -73,7 +79,7 @@ namespace Zwitter
         {
             UserManager userManager = new UserManager();
 
-            string[] options = new string[] { "Login", "Register", "Quit" };
+            string[] options = new string[] { "Login", "Register", "Check some zweets", "Quit" };
             int input = UserIO.Menu(options, "");
 
             switch (input)
@@ -89,6 +95,12 @@ namespace Zwitter
                     return true;
 
                 case 2:
+                    // Display all posts
+                    postManager.DisplayAllPosts();
+                    Console.ReadLine();
+                    return true;
+
+                case 3:
                     //quit
                     return false;
 

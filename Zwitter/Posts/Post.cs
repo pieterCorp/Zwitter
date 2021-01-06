@@ -6,9 +6,10 @@ namespace Zwitter
 {
     internal class Post
     {
-        public int postId { get; set; }
-        public int postFromUserId { get; set; }
-        public string postContent { get; set; }
-        public DateTime postedAt { get; set; }
+        public int PostId { get; set; }
+        public int PostFromUserId { get; set; }
+        public int[] LikedBy { get; set; }
+        public string PostContent { get; set; }
+        public DateTime PostedAt { get; set; }
     }
 }
