@@ -1,2 +1,0 @@
-{"Id":1,"FirstName":"t","LastName":"t","Email":"t","Password":"t","LoggedIn":false,"dateRegistered":"2021-01-06T09:50:47.1414303+01:00"}
-{"Id":2,"FirstName":"naam","LastName":"achternaam","Email":"test","Password":"123","LoggedIn":false,"dateRegistered":"2021-01-06T09:57:44.0530165+01:00"}

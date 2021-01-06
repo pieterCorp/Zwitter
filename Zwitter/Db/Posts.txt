@@ -1,2 +1,0 @@
-{"PostId":0,"PostFromUserId":2,"LikedBy":[2,1],"PostContent":"weinig","PostedAt":"2021-01-06T09:58:22.2129424+01:00"}
-{"PostId":1,"PostFromUserId":2,"LikedBy":[2],"PostContent":"test","PostedAt":"2021-01-06T11:29:30.8058117+01:00"}
