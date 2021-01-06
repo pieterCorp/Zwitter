@@ -159,9 +159,12 @@ namespace Zwitter
             List<int> usersWhoLiked = new List<int>();
             int selection = ShowPostsSelection(posts, "Like a Post");
 
-            if (posts[selection].LikedBy != null)
+            if (selection != posts.Count)
             {
-                usersWhoLiked = posts[selection].LikedBy.ToList();
+                if (posts[selection].LikedBy != null)
+                {
+                    usersWhoLiked = posts[selection].LikedBy.ToList();
+                }
             }
 
             if (selection == -1)
