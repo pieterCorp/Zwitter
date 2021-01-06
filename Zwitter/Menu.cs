@@ -4,9 +4,18 @@ namespace Zwitter
 {
     internal class Menu
     {
-        private User activeUser = new User();
-        private UserManager userManager = new UserManager();
-        private PostManager postManager = new PostManager();
+        private User activeUser;
+        private UserManager userManager;
+        private PostManager postManager;
+        private UserIO userIO;
+
+        public Menu()
+        {
+            activeUser = new User();
+            userManager = new UserManager();
+            postManager = new PostManager();
+            userIO = new UserIO();
+        }
 
         public void RunApp()
         {
@@ -27,8 +36,8 @@ namespace Zwitter
 
         private bool MenuLoggedIn()
         {
-            string[] options = new string[] { "Create new post", "Show all posts", "Show my posts", "Update a post", "Delete a post", "LogOut", "Quit" };
-            int input = UserIO.Menu(options, $"Welcome {activeUser.FirstName} {activeUser.LastName}");
+            string[] options = new string[] { "Create new post", "Show all posts", "Show my posts", "Update a post", "Delete a post", "Like a post", "LogOut", "Quit" };
+            int input = userIO.Menu(options, $"Welcome {activeUser.FirstName} {activeUser.LastName}");
 
             switch (input)
             {
@@ -60,11 +69,16 @@ namespace Zwitter
                     return true;
 
                 case 5:
+                    // like a post
+                    postManager.LikePost(activeUser);
+                    return true;
+
+                case 6:
                     // LogOut
                     userManager.Logout(activeUser);
                     return true;
 
-                case 6:
+                case 7:
                     //quit
                     return false;
 
@@ -80,7 +94,7 @@ namespace Zwitter
             UserManager userManager = new UserManager();
 
             string[] options = new string[] { "Login", "Register", "Check some zweets", "Quit" };
-            int input = UserIO.Menu(options, "");
+            int input = userIO.Menu(options, "");
 
             switch (input)
             {

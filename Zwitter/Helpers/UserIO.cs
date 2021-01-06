@@ -1,11 +1,10 @@
 ﻿using System;
-using static System.Console;
 
 namespace Zwitter
 {
     internal class UserIO
     {
-        internal static string zwitterAscii = @"
+        internal string zwitterAscii = @"
 
  ________  ___       __   ___  _________  _________  _______   ________
 |\_____  \|\  \     |\  \|\  \|\___   ___\\___   ___\\  ___ \ |\   __  \
@@ -17,7 +16,7 @@ namespace Zwitter
 
 ";
 
-        static public bool AskYesNoQ()
+        public bool AskYesNoQ()
         {
             bool validInput = false;
             bool answer = false;
@@ -50,7 +49,7 @@ namespace Zwitter
             return answer;
         }
 
-        static public string GetUserString()
+        public string GetUserString()
         {
             bool validInput = false;
             string input = "";
@@ -71,7 +70,7 @@ namespace Zwitter
             return input;
         }
 
-        static public int GetUserInt(int minValue, int maxValue)
+        public int GetUserInt(int minValue, int maxValue)
         {
             bool validInput = false;
             int validatedInput = 0;
@@ -97,7 +96,7 @@ namespace Zwitter
             return validatedInput;
         }
 
-        static public double GetUserDouble(int minValue, int maxValue)
+        public double GetUserDouble(int minValue, int maxValue)
         {
             bool validInput = false;
             double validatedInput = 0;
@@ -123,14 +122,14 @@ namespace Zwitter
             return validatedInput;
         }
 
-        static public int Menu(string[] options, string subTitle)
+        public int Menu(string[] options, string subTitle)
         {
             ConsoleKey keyPressed;
             int selectionIndex = 0;
 
             do
             {
-                Clear();
+                Console.Clear();
                 Console.CursorVisible = false;
                 PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
                 PrintColor(ConsoleColor.DarkCyan, subTitle, true);
@@ -141,21 +140,21 @@ namespace Zwitter
                 {
                     if (selectionIndex == i)
                     {
-                        ForegroundColor = ConsoleColor.White;
-                        Write("-> ");
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.Write("-> ");
                     }
                     else
                     {
-                        ForegroundColor = ConsoleColor.DarkCyan;
-                        if (i == options.Length - 1) ForegroundColor = ConsoleColor.DarkGray;
-                        Write("   ");
+                        Console.ForegroundColor = ConsoleColor.DarkCyan;
+                        if (i == options.Length - 1) Console.ForegroundColor = ConsoleColor.DarkGray;
+                        Console.Write("   ");
                     }
 
                     Console.WriteLine(options[i]);
                 }
-                ResetColor();
+                Console.ResetColor();
 
-                ConsoleKeyInfo keyInfo = ReadKey(true);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
                 keyPressed = keyInfo.Key;
 
                 if (keyPressed == ConsoleKey.UpArrow)
@@ -180,7 +179,7 @@ namespace Zwitter
             return selectionIndex;
         }
 
-        static public void PrintColor(ConsoleColor color, string stringToPrint, bool writeLine)
+        public void PrintColor(ConsoleColor color, string stringToPrint, bool writeLine)
         {
             Console.ForegroundColor = color;
             if (writeLine)
@@ -194,7 +193,7 @@ namespace Zwitter
             Console.ResetColor();
         }
 
-        static public void ShowTitle()
+        public void ShowTitle()
         {
             Console.Clear();
             PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
