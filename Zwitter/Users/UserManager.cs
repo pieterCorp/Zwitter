@@ -11,15 +11,21 @@ namespace Zwitter
 
         private List<string> EmailRegisteredUsers = new List<string>();
         private List<int> IdRegisteredUsers = new List<int>();
+        private UserIO userIO;
+
+        public UserManager()
+        {
+            userIO = new UserIO();
+        }
 
         public User Login()
         {
             UpdateSearchLists();
 
-            UserIO.ShowTitle();
+            userIO.ShowTitle();
 
             Console.WriteLine("Enter Email");
-            string eMail = UserIO.GetUserString();
+            string eMail = userIO.GetUserString();
 
             User user = GetUserByEmail(eMail);
 
@@ -31,7 +37,7 @@ namespace Zwitter
             }
 
             Console.WriteLine("Enter Password");
-            string password = UserIO.GetUserString();
+            string password = userIO.GetUserString();
 
             //check if email and pass are correct
             if (password != user.Password)
@@ -55,10 +61,10 @@ namespace Zwitter
         {
             UpdateSearchLists();
 
-            UserIO.ShowTitle();
+            userIO.ShowTitle();
 
             Console.WriteLine("Enter Email");
-            string eMail = UserIO.GetUserString();
+            string eMail = userIO.GetUserString();
 
             if (CheckEmailInSystem(eMail))
             {
@@ -73,7 +79,7 @@ namespace Zwitter
                 StoreUser(newUser);
                 UpdateSearchLists();
 
-                UserIO.PrintColor(ConsoleColor.Green, "Your account has been created. Press enter to continue", true);
+                userIO.PrintColor(ConsoleColor.Green, "Your account has been created. Press enter to continue", true);
                 Console.ReadLine();
             }
         }
@@ -91,13 +97,13 @@ namespace Zwitter
         private User MakeNewAccount(string eMail)
         {
             Console.WriteLine("Enter firstname");
-            string firstName = UserIO.GetUserString();
+            string firstName = userIO.GetUserString();
 
             Console.WriteLine("Enter lastname");
-            string lastName = UserIO.GetUserString();
+            string lastName = userIO.GetUserString();
 
             Console.WriteLine("Enter password");
-            string password = UserIO.GetUserString();
+            string password = userIO.GetUserString();
 
             // make unique id;
             Filemanager fileManager = new Filemanager();
@@ -160,8 +166,17 @@ namespace Zwitter
         private User GetUserByEmail(string eMail)
         {
             int index = EmailRegisteredUsers.IndexOf(eMail);
-            List<User> users = LoadUsers();
-            return users[index];
+
+            if (index < 0)
+            {
+                User defaultUser = new User();
+                return defaultUser;
+            }
+            else
+            {
+                List<User> users = LoadUsers();
+                return users[index];
+            }
         }
 
         public User GetUserByid(int id)
