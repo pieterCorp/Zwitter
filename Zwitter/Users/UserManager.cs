@@ -41,7 +41,7 @@ namespace Zwitter
             //check if email and pass are correct
             if (password != user.Password)
             {
-                userIO.PadLeft("Password incorrect, press enter to continue", 2, ConsoleColor.Red);
+                userIO.PadLeft("Password incorrect, press enter to continue", 2, ConsoleColor.DarkRed);
                 Console.ReadLine();
                 return user;
             }
@@ -68,7 +68,7 @@ namespace Zwitter
 
             if (CheckEmailInSystem(eMail))
             {
-                userIO.PadLeft("Email already exists, press enter to continue", 2);
+                userIO.PadLeft("Email already exists, press enter to continue", 2, ConsoleColor.DarkRed);
                 Console.ReadLine();
                 return;
             }
@@ -110,7 +110,7 @@ namespace Zwitter
 
             if (password != confirmPassword)
             {
-                userIO.PadLeft("Passwords did not match. Press enter and try again", 2, ConsoleColor.Red);
+                userIO.PadLeft("Passwords did not match. Press enter and try again", 2, ConsoleColor.DarkRed);
                 Console.ReadLine();
                 bool validPassword = false;
 

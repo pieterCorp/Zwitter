@@ -116,7 +116,7 @@ namespace Zwitter
 
             if (!user.allPosts.Any())
             {
-                userIO.PrintColor(ConsoleColor.Yellow, "No posts to show", true);
+                userIO.PadLeft("No posts to show", 2, ConsoleColor.Yellow);
             }
             else
             {
