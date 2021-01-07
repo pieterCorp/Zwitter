@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Zwitter
 {
@@ -38,12 +39,12 @@ namespace Zwitter
                     }
                     else
                     {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
+                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
                     }
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
+                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
                 }
             }
             return answer;
@@ -63,7 +64,7 @@ namespace Zwitter
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
+                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
                 }
             }
 
@@ -79,8 +80,8 @@ namespace Zwitter
             {
                 Console.Clear();
                 Console.CursorVisible = false;
-                PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
-                PrintColor(ConsoleColor.DarkCyan, subTitle, true);
+                CenterText(zwitterAscii);
+                PrintColor(ConsoleColor.DarkCyan, subTitle);
 
                 Console.WriteLine();
 
@@ -127,7 +128,7 @@ namespace Zwitter
             return selectionIndex;
         }
 
-        public void PrintColor(ConsoleColor color, string stringToPrint, bool writeLine)
+        public void PrintColor(ConsoleColor color, string stringToPrint, bool writeLine = true)
         {
             Console.ForegroundColor = color;
             if (writeLine)
@@ -141,10 +142,17 @@ namespace Zwitter
             Console.ResetColor();
         }
 
-        public void ShowTitle()
+        public void CenterText(string textToCenter)
         {
             Console.Clear();
-            PrintColor(ConsoleColor.Cyan, zwitterAscii, true);
+
+            var lines = textToCenter.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            var longestLength = lines.Max(line => line.Length);
+            var leadingSpaces = new string(' ', (Console.WindowWidth - longestLength) / 2);
+            var centeredText = string.Join(Environment.NewLine,
+                lines.Select(line => leadingSpaces + line));
+
+            PrintColor(ConsoleColor.Cyan, centeredText);
         }
     }
 }
