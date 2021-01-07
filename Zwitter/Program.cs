@@ -6,9 +6,9 @@ namespace Zwitter
     {
         private static void Main(string[] args)
         {
-            Console.SetWindowSize(100, 25);
+            Console.SetWindowSize(150, 25);
             Console.BufferHeight = 25;
-            Console.BufferWidth = 100;
+            Console.BufferWidth = 150;
             Menu menu = new Menu();
             menu.RunApp();
         }
