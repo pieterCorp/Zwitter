@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 
@@ -180,7 +181,7 @@ namespace Zwitter
             Console.ResetColor();
         }
 
-        private void ScreenSaver(string text, int setTimeInSec = 10, int speed = 50)
+        public void ScreenSaver(string text, int setTimeInSec = 10, int speed = 50)
         {
             Console.BufferWidth = Console.WindowWidth;
             Console.BufferHeight = Console.WindowHeight;
@@ -242,6 +243,75 @@ namespace Zwitter
                 Thread.Sleep(speed);
             }
             Console.ReadKey();
+        }
+
+        public void DisplayTable(string[] title, List<Post> posts, User user)
+        {
+            UserManager userManager = new UserManager();
+            userManager.LoadUserPosts(user);
+
+            List<string> tableContent = new List<string>();
+
+            int maxWitchColumn1 = title[0].Length;
+            int maxWitchColumn2 = title[1].Length;
+            int maxWitchColumn3 = title[2].Length;
+            int maxWitchColumn4 = 5;
+
+            foreach (var post in posts)
+            {
+                User postAuthor = userManager.GetUserByid(post.PostFromUserId);
+
+                if (postAuthor.UserName.Length > maxWitchColumn1)
+                {
+                    maxWitchColumn1 = postAuthor.UserName.Length;
+                }
+
+                if (post.PostedAt.ToString("dd/MM H:mm").Length > maxWitchColumn2)
+                {
+                    maxWitchColumn2 = post.PostedAt.ToString("dd/MM H:mm").Length;
+                }
+                if (post.PostContent.Length > maxWitchColumn3)
+                {
+                    maxWitchColumn3 = post.PostContent.Length;
+                }
+            }
+            int maxWidth = maxWitchColumn1 + maxWitchColumn2 + maxWitchColumn3 + maxWitchColumn4 + 15;
+            int startPosition = (Console.WindowWidth - maxWidth) / 2;
+
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.CursorLeft = startPosition;
+            Console.Write(title[0]);
+            Console.CursorLeft = startPosition + maxWitchColumn1 + 5;
+            Console.Write(title[1]);
+            Console.CursorLeft = startPosition + maxWitchColumn1 + maxWitchColumn2 + 10;
+            Console.Write(title[2]);
+            Console.CursorLeft = startPosition + maxWitchColumn1 + maxWitchColumn2 + maxWitchColumn3 + 15;
+            Console.WriteLine(title[3]);
+
+            Console.CursorLeft = startPosition;
+            for (int i = 0; i < maxWidth; i++)
+            {
+                PrintColor(ConsoleColor.Cyan, "_", false);
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.ResetColor();
+
+            foreach (var post in posts)
+            {
+                int likes = 0;
+                User postAuthor = userManager.GetUserByid(post.PostFromUserId);
+                if (post.LikedBy != null) likes = post.LikedBy.Length;
+
+                Console.CursorLeft = startPosition;
+                Console.Write(postAuthor.UserName);
+                Console.CursorLeft = startPosition + maxWitchColumn1 + 5;
+                Console.Write((post.PostedAt.ToString("dd/MM H:mm")));
+                Console.CursorLeft = startPosition + maxWitchColumn1 + maxWitchColumn2 + 10;
+                Console.Write(post.PostContent);
+                Console.CursorLeft = startPosition + maxWitchColumn1 + maxWitchColumn2 + maxWitchColumn3 + 15;
+                Console.WriteLine(likes);
+            }
         }
     }
 }

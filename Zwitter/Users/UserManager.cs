@@ -96,6 +96,9 @@ namespace Zwitter
 
         private User MakeNewAccount(string eMail)
         {
+            userIO.PadLeft("Enter username", 2);
+            string userName = userIO.GetUserString();
+
             userIO.PadLeft("Enter firstname", 2);
             string firstName = userIO.GetUserString();
 
@@ -135,6 +138,7 @@ namespace Zwitter
 
             User newUser = new User();
 
+            newUser.UserName = userName;
             newUser.FirstName = firstName;
             newUser.LastName = lastName;
             newUser.Email = eMail;

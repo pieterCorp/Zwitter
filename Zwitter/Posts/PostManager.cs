@@ -120,19 +120,16 @@ namespace Zwitter
             }
             else
             {
-                var table = new ConsoleTable("Author", "Posted at", "Zweet Body", "Likes");
-                foreach (var post in user.allPosts)
-                {
-                    User postAuthor = userManager.GetUserByid(post.PostFromUserId);
-                    int likes = 0;
-                    if (post.LikedBy != null) likes = post.LikedBy.Length;
-                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
-                }
-                table.Configure(o => o.NumberAlignment = Alignment.Left).Write(Format.Minimal);
+                string[] title = { "Author", "Posted at", "Zweet Body", "Likes" };
+                userIO.DisplayTable(title, user.allPosts, user);
+                userIO.ScreenSaver("Zwitter", 10, 100);
+                Console.Clear();
+                userIO.CenterText(userIO.zwitterAscii);
+                userIO.DisplayTable(title, user.allPosts, user);
             }
         }
 
-        public void DisplayAllPosts()
+        public void DisplayAllPosts(User user)
         {
             UserManager userManager = new UserManager();
 
@@ -146,15 +143,12 @@ namespace Zwitter
             }
             else
             {
-                var table = new ConsoleTable("Author", "zweeted at", "Zweet Body", "Likes");
-                foreach (var post in posts)
-                {
-                    User postAuthor = userManager.GetUserByid(post.PostFromUserId);
-                    int likes = 0;
-                    if (post.LikedBy != null) likes = post.LikedBy.Length;
-                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
-                }
-                table.Configure(o => o.NumberAlignment = Alignment.Left).Write(Format.Minimal);
+                string[] title = { "Author", "Posted at", "Zweet Body", "Likes" };
+                userIO.DisplayTable(title, posts, user);
+                userIO.ScreenSaver("Zwitter", 10, 100);
+                Console.Clear();
+                userIO.CenterText(userIO.zwitterAscii);
+                userIO.DisplayTable(title, posts, user);
             }
         }
 
@@ -271,6 +265,12 @@ namespace Zwitter
 
             userIO.PadLeft("What's happening?", 2, ConsoleColor.DarkCyan);
             string content = userIO.GetUserString();
+            if (content.Length > 95)
+            {
+                userIO.PadLeft("Zweet has max of 80 characters! It will be cut! Press enter to continue", 2, ConsoleColor.DarkRed);
+                Console.ReadLine();
+                content = content.Substring(0, 80);
+            }
             return content;
         }
 
