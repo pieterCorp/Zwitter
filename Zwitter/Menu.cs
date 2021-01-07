@@ -38,49 +38,41 @@ namespace Zwitter
         {
             string[] options = new string[] { "Create new zweet", "Show all zweets", "Show my zweets", "Update a zweet", "Delete a zweet", "Like a zweet", "LogOut", "Quit" };
 
-            int input = userIO.Menu(options, $"   Welcome {activeUser.FirstName} {activeUser.LastName}");
+            int input = userIO.Menu(options, $"   Welcome {activeUser.UserName}");
 
             switch (input)
             {
                 case 0:
-                    // Create new post
                     postManager.CreateNewPost(activeUser);
                     return true;
 
                 case 1:
-                    //show all posts
-                    postManager.DisplayAllPosts();
+                    postManager.DisplayAllPosts(activeUser);
                     Console.ReadLine();
                     return true;
 
                 case 2:
-                    //show all posts of user
                     postManager.DisplayUserPosts(activeUser);
                     Console.ReadLine();
                     return true;
 
                 case 3:
-                    //update a post
                     postManager.UpdatePost(activeUser);
                     return true;
 
                 case 4:
-                    // delete a post
                     postManager.DeletePost(activeUser);
                     return true;
 
                 case 5:
-                    // like a post
                     postManager.LikePost(activeUser);
                     return true;
 
                 case 6:
-                    // LogOut
                     userManager.Logout(activeUser);
                     return true;
 
                 case 7:
-                    //quit
                     return false;
 
                 default:
@@ -100,23 +92,19 @@ namespace Zwitter
             switch (input)
             {
                 case 0:
-                    //login
                     activeUser = userManager.Login();
                     return true;
 
                 case 1:
-                    // register
                     userManager.Register();
                     return true;
 
                 case 2:
-                    // Display all posts
-                    postManager.DisplayAllPosts();
+                    postManager.DisplayAllPosts(activeUser);
                     Console.ReadLine();
                     return true;
 
                 case 3:
-                    //quit
                     return false;
 
                 default:
