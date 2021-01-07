@@ -70,58 +70,6 @@ namespace Zwitter
             return input;
         }
 
-        public int GetUserInt(int minValue, int maxValue)
-        {
-            bool validInput = false;
-            int validatedInput = 0;
-            while (!validInput)
-            {
-                try
-                {
-                    validatedInput = Convert.ToInt32(Console.ReadLine());
-                    if (validatedInput >= minValue && validatedInput <= maxValue)
-                    {
-                        validInput = true;
-                    }
-                    else
-                    {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
-                    }
-                }
-                catch (Exception)
-                {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
-                }
-            }
-            return validatedInput;
-        }
-
-        public double GetUserDouble(int minValue, int maxValue)
-        {
-            bool validInput = false;
-            double validatedInput = 0;
-            while (!validInput)
-            {
-                try
-                {
-                    validatedInput = Convert.ToDouble(Console.ReadLine());
-                    if (validatedInput >= minValue && validatedInput <= maxValue)
-                    {
-                        validInput = true;
-                    }
-                    else
-                    {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
-                    }
-                }
-                catch (Exception)
-                {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again", true);
-                }
-            }
-            return validatedInput;
-        }
-
         public int Menu(string[] options, string subTitle)
         {
             ConsoleKey keyPressed;

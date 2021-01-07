@@ -109,9 +109,10 @@ namespace Zwitter
 
         public void DisplayUserPosts(User user)
         {
-            userIO.ShowTitle();
-
             UserManager userManager = new UserManager();
+            userManager.LoadUserPosts(user);
+
+            userIO.ShowTitle();
 
             if (!user.allPosts.Any())
             {
@@ -119,11 +120,13 @@ namespace Zwitter
             }
             else
             {
-                var table = new ConsoleTable("Author", "Posted at", "Zweet Body");
+                var table = new ConsoleTable("Author", "Posted at", "Zweet Body", "Likes");
                 foreach (var post in user.allPosts)
                 {
                     User postAuthor = userManager.GetUserByid(post.PostFromUserId);
-                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt, post.PostContent);
+                    int likes = 0;
+                    if (post.LikedBy != null) likes = post.LikedBy.Length;
+                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
                 }
                 table.Write();
             }
@@ -143,11 +146,13 @@ namespace Zwitter
             }
             else
             {
-                var table = new ConsoleTable("Author", "Posted at", "Zweet Body");
+                var table = new ConsoleTable("Author", "Posted at", "Zweet Body", "Likes");
                 foreach (var post in posts)
                 {
                     User postAuthor = userManager.GetUserByid(post.PostFromUserId);
-                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt, post.PostContent);
+                    int likes = 0;
+                    if (post.LikedBy != null) likes = post.LikedBy.Length;
+                    table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
                 }
                 table.Write();
             }
@@ -157,19 +162,23 @@ namespace Zwitter
         {
             List<Post> posts = LoadPosts();
             List<int> usersWhoLiked = new List<int>();
-            int selection = ShowPostsSelection(posts, "Like a Post");
+            int selection = ShowPostsSelection(posts, "Like a zweet");
 
-            if (selection != posts.Count)
+            if (selection != posts.Count) // user pressed back
             {
-                if (posts[selection].LikedBy != null)
+                if (posts.Count != 0) // post selection is not null
                 {
-                    usersWhoLiked = posts[selection].LikedBy.ToList();
+                    if (posts[selection].LikedBy != null) // likedby list is not empty
+                    {
+                        usersWhoLiked = posts[selection].LikedBy.ToList();
+                    }
                 }
             }
 
             if (selection == -1)
             {
-                userIO.PrintColor(ConsoleColor.Yellow, "No posts to like, press enter to continue", true);
+                userIO.ShowTitle();
+                userIO.PrintColor(ConsoleColor.Yellow, "No zwwets to like, press enter to continue", true);
                 Console.ReadLine();
             }
             else if (selection == posts.Count)
@@ -190,14 +199,14 @@ namespace Zwitter
 
                 if (alreadyLiked)
                 {
-                    Console.WriteLine("you already like this post, can't like twice");
+                    Console.WriteLine("You already liked this zweet, can't like twice");
                     Console.ReadLine();
                 }
                 else
                 {
                     usersWhoLiked.Add(user.Id); //like as current user
                     posts[selection].LikedBy = usersWhoLiked.ToArray();
-                    UpdateDb(posts); //update posts
+                    UpdateDb(posts);
 
                     userIO.PrintColor(ConsoleColor.Green, "You liked this zweet!", true);
                     Console.ReadLine();
