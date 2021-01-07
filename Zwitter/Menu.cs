@@ -37,7 +37,7 @@ namespace Zwitter
         private bool MenuLoggedIn()
         {
             string[] options = new string[] { "Create new post", "Show all posts", "Show my posts", "Update a post", "Delete a post", "Like a post", "LogOut", "Quit" };
-            int input = userIO.Menu(options, $"Welcome {activeUser.FirstName} {activeUser.LastName}");
+            int input = userIO.Menu(options, $"   Welcome {activeUser.FirstName} {activeUser.LastName}");
 
             switch (input)
             {
