@@ -128,8 +128,7 @@ namespace Zwitter
                     if (post.LikedBy != null) likes = post.LikedBy.Length;
                     table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
                 }
-
-                table.Configure(o => o.NumberAlignment = Alignment.Right).Write(Format.Minimal);
+                table.Configure(o => o.NumberAlignment = Alignment.Left).Write(Format.Minimal);
             }
         }
 
@@ -155,7 +154,7 @@ namespace Zwitter
                     if (post.LikedBy != null) likes = post.LikedBy.Length;
                     table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
                 }
-                table.Configure(o => o.NumberAlignment = Alignment.Right).Write(Format.Minimal);
+                table.Configure(o => o.NumberAlignment = Alignment.Left).Write(Format.Minimal);
             }
         }
 
