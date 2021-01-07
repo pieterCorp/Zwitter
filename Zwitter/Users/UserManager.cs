@@ -63,12 +63,12 @@ namespace Zwitter
 
             UpdateSearchLists();
 
-            Console.WriteLine("  Enter Email");
+            userIO.PadLeft("Enter Email", 2);
             string eMail = userIO.GetUserString();
 
             if (CheckEmailInSystem(eMail))
             {
-                Console.WriteLine("email already exists, press enter to continue");
+                userIO.PadLeft("Email already exists, press enter to continue", 2);
                 Console.ReadLine();
                 return;
             }
