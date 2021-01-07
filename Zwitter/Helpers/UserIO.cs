@@ -7,13 +7,13 @@ namespace Zwitter
     {
         internal string zwitterAscii = @"
 
- ________  ___       __   ___  _________  _________  _______   ________
-|\_____  \|\  \     |\  \|\  \|\___   ___\\___   ___\\  ___ \ |\   __  \
- \|___/  /\ \  \    \ \  \ \  \|___ \  \_\|___ \  \_\ \   __/|\ \  \|\  \
-     /  / /\ \  \  __\ \  \ \  \   \ \  \     \ \  \ \ \  \_|/_\ \   _  _\
-    /  /_/__\ \  \|\__\_\  \ \  \   \ \  \     \ \  \ \ \  \_|\ \ \  \\  \|
-   |\________\ \____________\ \__\   \ \__\     \ \__\ \ \_______\ \__\\ _\
-    \|_______|\|____________|\|__|    \|__|      \|__|  \|_______|\|__|\|__|
+::::::::: :::       ::: ::::::::::: ::::::::::: ::::::::::: :::::::::: :::::::::
+     :+:  :+:       :+:     :+:         :+:         :+:     :+:        :+:    :+:
+    +:+   +:+       +:+     +:+         +:+         +:+     +:+        +:+    +:+
+   +#+    +#+  +:+  +#+     +#+         +#+         +#+     +#++:++#   +#++:++#:
+  +#+     +#+ +#+#+ +#+     +#+         +#+         +#+     +#+        +#+    +#+
+ #+#       #+#+# #+#+#      #+#         #+#         #+#     #+#        #+#    #+#
+#########   ###   ###   ###########     ###         ###     ########## ###    ###
 
 ";
 
@@ -39,12 +39,12 @@ namespace Zwitter
                     }
                     else
                     {
-                        PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                        PadLeft("Input not valid, plz try again", 2, ConsoleColor.Red);
                     }
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                    PadLeft("Input not valid, plz try again", 2, ConsoleColor.Red);
                 }
             }
             return answer;
@@ -64,7 +64,7 @@ namespace Zwitter
                 }
                 catch (Exception)
                 {
-                    PrintColor(ConsoleColor.Red, "Input not valid, plz try again");
+                    PadLeft("Input not valid, plz try again", 2, ConsoleColor.Red);
                 }
             }
 
@@ -145,14 +145,31 @@ namespace Zwitter
         public void CenterText(string textToCenter)
         {
             Console.Clear();
+            string[] lines;
+            try
+            {
+                lines = textToCenter.Split(new[] { "\n" }, StringSplitOptions.None);
+            }
+            catch (Exception)
+            {
+                lines = textToCenter.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            }
 
-            var lines = textToCenter.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             var longestLength = lines.Max(line => line.Length);
-            var leadingSpaces = new string(' ', (Console.WindowWidth - longestLength) / 2);
+            string leadingSpaces = new string(' ', (Console.WindowWidth - longestLength) / 2);
             var centeredText = string.Join(Environment.NewLine,
                 lines.Select(line => leadingSpaces + line));
 
             PrintColor(ConsoleColor.Cyan, centeredText);
+        }
+
+        public void PadLeft(string text, int indentation, ConsoleColor consoleColor = ConsoleColor.White)
+        {
+            Console.ForegroundColor = consoleColor;
+            Console.CursorLeft = indentation;
+            Console.WriteLine(text);
+            Console.CursorLeft = indentation;
+            Console.ResetColor();
         }
     }
 }

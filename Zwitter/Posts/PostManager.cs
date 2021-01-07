@@ -34,12 +34,12 @@ namespace Zwitter
         {
             List<Post> posts = LoadPosts();
 
-            int selection = ShowPostsSelection(user.allPosts, "   Delete Post\n   ___________");
+            int selection = ShowPostsSelection(user.allPosts, "  Delete Post\n  ___________");
 
             if (selection == -1)
             {
                 userIO.CenterText(userIO.zwitterAscii);
-                userIO.PrintColor(ConsoleColor.Yellow, "No posts to be deleted, press enter to continue");
+                userIO.PadLeft("No posts to be deleted, press enter to continue", 2, ConsoleColor.Yellow);
                 Console.ReadLine();
             }
             else if (selection == user.allPosts.Count)
@@ -48,7 +48,7 @@ namespace Zwitter
             }
             else
             {
-                userIO.PrintColor(ConsoleColor.DarkRed, "Are you sure you want to delete this post? y/n");
+                userIO.PadLeft("Are you sure you want to delete this post? y/n", 2, ConsoleColor.DarkRed);
 
                 if (userIO.AskYesNoQ())
                 {
@@ -62,7 +62,7 @@ namespace Zwitter
 
                     userIO.CenterText(userIO.zwitterAscii);
 
-                    userIO.PrintColor(ConsoleColor.Green, "Your post was succesfully deleted!, press enter to continue");
+                    userIO.PadLeft("Your post was succesfully deleted!, press enter to continue", 2, ConsoleColor.Green);
                     Console.ReadLine();
                 }
             }
@@ -76,7 +76,7 @@ namespace Zwitter
             if (selection == -1)
             {
                 userIO.CenterText(userIO.zwitterAscii);
-                userIO.PrintColor(ConsoleColor.Yellow, "No posts to be updated, press enter to continue");
+                userIO.PadLeft("No posts to be updated, press enter to continue", 2, ConsoleColor.Yellow);
                 Console.ReadLine();
             }
             else if (selection == user.allPosts.Count)
@@ -86,7 +86,7 @@ namespace Zwitter
             else
             {
                 string newContent = GetPostContent();
-                userIO.PrintColor(ConsoleColor.DarkRed, "Are you sure you want to update this post? y/n");
+                userIO.PadLeft("Are you sure you want to update this post? y/n", 2, ConsoleColor.DarkRed);
 
                 if (userIO.AskYesNoQ())
                 {
@@ -101,7 +101,7 @@ namespace Zwitter
 
                     userIO.CenterText(userIO.zwitterAscii);
 
-                    userIO.PrintColor(ConsoleColor.Green, "Your post was succesfully updated!, press enter to continue");
+                    userIO.PadLeft("Your post was succesfully updated!, press enter to continue", 2, ConsoleColor.Green);
                     Console.ReadLine();
                 }
             }
@@ -128,7 +128,7 @@ namespace Zwitter
                     if (post.LikedBy != null) likes = post.LikedBy.Length;
                     table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
                 }
-                table.Write();
+                table.Configure(o => o.NumberAlignment = Alignment.Right).Write(Format.Minimal);
             }
         }
 
@@ -142,7 +142,7 @@ namespace Zwitter
 
             if (!posts.Any())
             {
-                userIO.PrintColor(ConsoleColor.Yellow, "No posts to show", true);
+                userIO.PadLeft("No posts to show", 2, ConsoleColor.Yellow);
             }
             else
             {
@@ -154,7 +154,7 @@ namespace Zwitter
                     if (post.LikedBy != null) likes = post.LikedBy.Length;
                     table.AddRow($"{postAuthor.FirstName} {postAuthor.LastName}", post.PostedAt.ToString("dd/MM H:mm"), post.PostContent, likes);
                 }
-                table.Write();
+                table.Configure(o => o.NumberAlignment = Alignment.Right).Write(Format.Minimal);
             }
         }
 
@@ -178,7 +178,7 @@ namespace Zwitter
             if (selection == -1)
             {
                 userIO.CenterText(userIO.zwitterAscii);
-                userIO.PrintColor(ConsoleColor.Yellow, "No zweets to like, press enter to continue");
+                userIO.PadLeft("No zweets to like, press enter to continue", 2, ConsoleColor.Yellow);
                 Console.ReadLine();
             }
             else if (selection == posts.Count)
@@ -199,7 +199,7 @@ namespace Zwitter
 
                 if (alreadyLiked)
                 {
-                    Console.WriteLine("You already liked this zweet, can't like twice");
+                    userIO.PadLeft("You already liked this zweet, can't like twice", 2);
                     Console.ReadLine();
                 }
                 else
@@ -208,7 +208,7 @@ namespace Zwitter
                     posts[selection].LikedBy = usersWhoLiked.ToArray();
                     UpdateDb(posts);
 
-                    userIO.PrintColor(ConsoleColor.Green, "You liked this zweet!");
+                    userIO.PadLeft("You liked this zweet!", 2, ConsoleColor.Green);
                     Console.ReadLine();
                 }
             }
@@ -269,7 +269,7 @@ namespace Zwitter
         {
             userIO.CenterText(userIO.zwitterAscii);
 
-            userIO.PrintColor(ConsoleColor.DarkCyan, "   What's happening?");
+            userIO.PadLeft("What's happening?", 2, ConsoleColor.DarkCyan);
             string content = userIO.GetUserString();
             return content;
         }
