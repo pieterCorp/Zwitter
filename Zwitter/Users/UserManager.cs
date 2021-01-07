@@ -21,29 +21,27 @@ namespace Zwitter
         public User Login()
         {
             userIO.CenterText(userIO.zwitterAscii);
-            userIO.PrintColor(ConsoleColor.Cyan, "  Login\n");
-
+            userIO.PadLeft("Login\n", 2, ConsoleColor.Cyan);
             UpdateSearchLists();
 
-            Console.WriteLine("  Enter Email");
+            userIO.PadLeft("Enter Email", 2);
             string eMail = userIO.GetUserString();
-
             User user = GetUserByEmail(eMail);
 
             if (!CheckEmailInSystem(eMail))
             {
-                Console.WriteLine("Email not found. Press enter to continue.");
+                userIO.PadLeft("Email not found. Press enter to continue.", 2, ConsoleColor.DarkYellow);
                 Console.ReadLine();
                 return user;
             }
 
-            Console.WriteLine("  Enter Password");
+            userIO.PadLeft("Enter Password", 2);
             string password = GetPassword();
 
             //check if email and pass are correct
             if (password != user.Password)
             {
-                userIO.PrintColor(ConsoleColor.Red, "Password incorrect, press enter to continue");
+                userIO.PadLeft("Password incorrect, press enter to continue", 2, ConsoleColor.Red);
                 Console.ReadLine();
                 return user;
             }
@@ -61,7 +59,7 @@ namespace Zwitter
         public void Register()
         {
             userIO.CenterText(userIO.zwitterAscii);
-            userIO.PrintColor(ConsoleColor.Cyan, "  Register\n");
+            userIO.PadLeft("Register\n", 2, ConsoleColor.Cyan);
 
             UpdateSearchLists();
 
@@ -81,7 +79,7 @@ namespace Zwitter
                 StoreUser(newUser);
                 UpdateSearchLists();
 
-                userIO.PrintColor(ConsoleColor.Green, "Your account has been created. Press enter to continue");
+                userIO.PadLeft("Your account has been created. Press enter to continue", 2, ConsoleColor.Green);
                 Console.ReadLine();
             }
         }
@@ -98,30 +96,32 @@ namespace Zwitter
 
         private User MakeNewAccount(string eMail)
         {
-            Console.WriteLine("  Enter firstname");
+            userIO.PadLeft("Enter firstname", 2);
             string firstName = userIO.GetUserString();
 
-            Console.WriteLine("  Enter lastname");
+            userIO.PadLeft("Enter lastname", 2);
             string lastName = userIO.GetUserString();
 
-            Console.WriteLine("  Enter password");
+            userIO.PadLeft("Enter password", 2);
             string password = GetPassword();
-            Console.WriteLine("  Confirm password");
+
+            userIO.PadLeft("Confirm password", 2);
             string confirmPassword = GetPassword();
 
             if (password != confirmPassword)
             {
-                userIO.PrintColor(ConsoleColor.Red, "Passwords did not match. Press enter and try again");
+                userIO.PadLeft("Passwords did not match. Press enter and try again", 2, ConsoleColor.Red);
                 Console.ReadLine();
                 bool validPassword = false;
 
                 while (!validPassword)
                 {
-                    Console.WriteLine("  Enter password");
+                    userIO.PadLeft("Enter password", 2);
                     password = GetPassword();
 
-                    Console.WriteLine("  Confirm password");
+                    userIO.PadLeft("Confirm password", 2);
                     confirmPassword = GetPassword();
+
                     if (password == confirmPassword)
                     {
                         validPassword = true;
