@@ -20,9 +20,10 @@ namespace Zwitter
 
         public User Login()
         {
-            UpdateSearchLists();
-
             userIO.ShowTitle();
+            userIO.PrintColor(ConsoleColor.Cyan, "Login\n", true);
+
+            UpdateSearchLists();
 
             Console.WriteLine("Enter Email");
             string eMail = userIO.GetUserString();
@@ -37,12 +38,12 @@ namespace Zwitter
             }
 
             Console.WriteLine("Enter Password");
-            string password = userIO.GetUserString();
+            string password = GetPassword();
 
             //check if email and pass are correct
             if (password != user.Password)
             {
-                Console.WriteLine("Password incorrect, press enter to continue");
+                userIO.PrintColor(ConsoleColor.Red, "Password incorrect, press enter to continue", true);
                 Console.ReadLine();
                 return user;
             }
@@ -59,9 +60,10 @@ namespace Zwitter
 
         public void Register()
         {
-            UpdateSearchLists();
-
             userIO.ShowTitle();
+            userIO.PrintColor(ConsoleColor.Cyan, "Register\n", true);
+
+            UpdateSearchLists();
 
             Console.WriteLine("Enter Email");
             string eMail = userIO.GetUserString();
@@ -103,7 +105,29 @@ namespace Zwitter
             string lastName = userIO.GetUserString();
 
             Console.WriteLine("Enter password");
-            string password = userIO.GetUserString();
+            string password = GetPassword();
+            Console.WriteLine("Confirm password");
+            string confirmPassword = GetPassword();
+
+            if (password != confirmPassword)
+            {
+                userIO.PrintColor(ConsoleColor.Red, "Passwords did not match. Press enter and try again", true);
+                Console.ReadLine();
+                bool validPassword = false;
+
+                while (!validPassword)
+                {
+                    Console.WriteLine("Enter password");
+                    password = GetPassword();
+
+                    Console.WriteLine("Confirm password");
+                    confirmPassword = GetPassword();
+                    if (password == confirmPassword)
+                    {
+                        validPassword = true;
+                    }
+                }
+            }
 
             // make unique id;
             Filemanager fileManager = new Filemanager();
@@ -119,6 +143,30 @@ namespace Zwitter
             newUser.Id = newId;
 
             return newUser;
+        }
+
+        private string GetPassword()
+        {
+            var pass = string.Empty;
+            ConsoleKey key;
+            do
+            {
+                var keyInfo = Console.ReadKey(intercept: true);
+                key = keyInfo.Key;
+
+                if (key == ConsoleKey.Backspace && pass.Length > 0)
+                {
+                    Console.Write("\b \b");
+                    pass = pass[0..^1];
+                }
+                else if (!char.IsControl(keyInfo.KeyChar))
+                {
+                    Console.Write("*");
+                    pass += keyInfo.KeyChar;
+                }
+            } while (key != ConsoleKey.Enter);
+            Console.WriteLine();
+            return pass;
         }
 
         private void StoreUser(User user)
@@ -187,7 +235,7 @@ namespace Zwitter
             return users[index];
         }
 
-        private void LoadUserPosts(User user)
+        public void LoadUserPosts(User user)
         {
             PostManager postManager = new PostManager();
             List<Post> allPosts = postManager.LoadPosts();

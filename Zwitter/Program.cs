@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Zwitter
+﻿namespace Zwitter
 {
     internal class Program
     {
