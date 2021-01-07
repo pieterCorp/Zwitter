@@ -6,7 +6,6 @@ namespace Zwitter
     internal class UserIO
     {
         internal string zwitterAscii = @"
-
  ________  ___       __   ___  _________  _________  _______   ________
 |\_____  \|\  \     |\  \|\  \|\___   ___\\___   ___\\  ___ \ |\   __  \
  \|___/  /\ \  \    \ \  \ \  \|___ \  \_\|___ \  \_\ \   __/|\ \  \|\  \
@@ -14,7 +13,6 @@ namespace Zwitter
     /  /_/__\ \  \|\__\_\  \ \  \   \ \  \     \ \  \ \ \  \_|\ \ \  \\  \|
    |\________\ \____________\ \__\   \ \__\     \ \__\ \ \_______\ \__\\ _\
     \|_______|\|____________|\|__|    \|__|      \|__|  \|_______|\|__|\|__|
-
 ";
 
         public bool AskYesNoQ()
@@ -145,10 +143,18 @@ namespace Zwitter
         public void CenterText(string textToCenter)
         {
             Console.Clear();
+            string[] lines;
+            try
+            {
+                lines = textToCenter.Split(new[] { "\n" }, StringSplitOptions.None);
+            }
+            catch (Exception)
+            {
+                lines = textToCenter.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            }
 
-            var lines = textToCenter.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
             var longestLength = lines.Max(line => line.Length);
-            var leadingSpaces = new string(' ', (Console.WindowWidth - longestLength) / 2);
+            string leadingSpaces = new string(' ', (Console.WindowWidth - longestLength) / 2);
             var centeredText = string.Join(Environment.NewLine,
                 lines.Select(line => leadingSpaces + line));
 
